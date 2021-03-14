@@ -1,0 +1,93 @@
+/**
+ * 
+ */
+package com.uadec.ws.model;
+
+import java.io.Serializable;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+import com.uadec.core.cm.BaseFolderCm;
+import com.uadec.core.util.PropertyUtil;
+import com.uadec.entity.model.CatTipoCuenta;
+import com.uadec.entity.model.CatTipoTramite;
+import com.uadec.entity.model.Solicitud;
+import com.uadec.ws.util.ConstantesWs;
+
+/**
+ * @author adinfi
+ *
+ */
+public class CMExpediente extends BaseFolderCm implements Serializable {
+
+	private static final long serialVersionUID = 9143580773269827713L;
+	private final static Logger log = Logger.getLogger(CMExpediente.class);
+	
+	private Solicitud solicitud;
+	private CatTipoTramite catTipoTramite;
+	private CatTipoCuenta catCuentas;
+	
+	
+	public CMExpediente(Solicitud solicitud, CatTipoTramite catTipoTramite, CatTipoCuenta catCuentas) {
+		setSolicitud(solicitud);
+		setCatTipoTramite(catTipoTramite);
+		setCatCuentas(catCuentas);
+	}
+	
+	public Solicitud getSolicitud() {
+		return solicitud;
+	}
+	public void setSolicitud(Solicitud solicitud) {
+		this.solicitud = solicitud;
+	}
+	public CatTipoTramite getCatTipoTramite() {
+		return catTipoTramite;
+	}
+	public void setCatTipoTramite(CatTipoTramite catTipoTramite) {
+		this.catTipoTramite = catTipoTramite;
+	}
+	public CatTipoCuenta getCatCuentas() {
+		return catCuentas;
+	}
+	public void setCatCuentas(CatTipoCuenta catCuentas) {
+		this.catCuentas = catCuentas;
+	}
+	@Override
+	public void mapAttributesValues(Map<String, Object> values) {
+		values.put("UAC_ID_SOL", getSolicitud().getIdSolicitud());
+		values.put("UAC_CICLO", getSolicitud().getCiclo());
+		values.put("UAC_CUENTA_PAGAR",getSolicitud().getCuentaPagar());
+//		values.put("UAC_FECHA_SOL",new java.sql.Date(getSolicitud().getFechaSolicitud().getTime()));
+		values.put("UAC_FECHA_SOL",getSolicitud().getFechaSolicitud().getTime());
+		values.put("UAC_FONDO",getSolicitud().getFondo());
+		values.put("UAC_NCBANCARIA",getSolicitud().getNCbancaria());
+		values.put("UAC_UNID_ORG",getSolicitud().getUnidadOrg());
+		values.put("UAC_IMPORTE",getSolicitud().getImporte().toString());
+		values.put("UAC_AUTORIZADOR",getSolicitud().getAutorizador());
+		values.put("UAC_ELABORADOR",getSolicitud().getElaborador());
+		values.put("UAC_CONTRATO",getSolicitud().getContrato());
+		values.put("UAC_RFC_PROVEEDOR",getSolicitud().getRfcProveedor());
+		values.put("UAC_CHEQUE",getSolicitud().getCheque());
+		values.put("UAC_FOLIO_V",getSolicitud().getFolioVentanilla());
+		values.put("UAC_FOLIO_S",getSolicitud().getFolioSdr());
+		values.put("UAC_N_COMPROMISO",getSolicitud().getNCompromiso());
+		values.put("UAC_C_BENEFICIARIO",getSolicitud().getClaveBeneficiario());
+		values.put("UAC_T_TRAMITE",getCatTipoTramite().getDescripcion());
+		values.put("UAC_CUENTA",getCatCuentas().getDescripcion());
+		values.put("UAC_SCUENTA",getCatCuentas().getDescripcion());
+		values.put("UAC_SSCUENTA",getCatCuentas().getDescripcion());
+	}
+	@Override
+	public String getValueSearch() {
+		return solicitud.getIdSolicitud().toString();
+	}
+	@Override
+	public String getModel() {
+		return PropertyUtil.getProperty(ConstantesWs.UAC_EXPEDIENTE_KEY_MODEL);
+	}
+	@Override
+	public String getKeySearch() {
+		return ConstantesWs.UAC_EXPEDIENTE_KEY_SEARCH;
+	}
+}

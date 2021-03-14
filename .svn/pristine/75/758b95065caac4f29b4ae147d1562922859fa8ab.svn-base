@@ -1,0 +1,9 @@
+db.driverclassname=com.ibm.db2.jcc.DB2Driver
+db.url=jdbc:db2://localhost:50001/UADEC:currentSchema=UADEC;
+db.user=db2admin
+db.password=password
+
+db.hibernate.dialect=org.hibernate.dialect.DB2Dialect
+db.hibernate.hbm2ddl.auto=update
+db.hibernate.show_sql=false
+db.hibernate.format_sql=true

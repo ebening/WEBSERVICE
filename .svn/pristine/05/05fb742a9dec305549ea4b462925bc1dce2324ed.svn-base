@@ -1,0 +1,13 @@
+package com.uadec.core.cm;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public interface Modelable {
+	public Map<String,Object> values = new HashMap<String,Object>();
+	public void mapAttributesValues(Map<String,Object> values);
+	public String getValueSearch();
+	public String getModel();
+	public String getKeySearch();
+	public short getType();
+}

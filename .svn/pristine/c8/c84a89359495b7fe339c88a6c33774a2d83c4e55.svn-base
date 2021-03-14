@@ -1,0 +1,9 @@
+icm.library=icmnlsdb
+icm.admin=icmadmin
+icm.password=Passw0rd
+icm.schema=SCHEMA=icmadmin
+#icm.server.file=ICMSERVERSFILE=(/lws/cmbicmsrvs.ini)
+icm.server.file=ICMSERVERSFILE=({0})
+
+cm.itemType.expediente=UAC_EXPEDIENTE
+cm.itemType.documento=UAC_DOCUMENTO

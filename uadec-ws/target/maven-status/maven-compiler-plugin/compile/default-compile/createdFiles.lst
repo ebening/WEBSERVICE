@@ -1,0 +1,11 @@
+com/uadec/ws/service/TestService.class
+com/uadec/ws/util/Utilerias.class
+com/uadec/ws/model/CMDocumento.class
+com/uadec/ws/model/DataContent.class
+com/uadec/ws/model/CMExpediente.class
+com/uadec/ws/model/Test.class
+com/uadec/ws/validator/DataContentValidator.class
+com/uadec/ws/controller/TestController.class
+com/uadec/ws/controller/DataContentController.class
+com/uadec/ws/util/ConstantesWs.class
+com/uadec/ws/service/DataContentService.class

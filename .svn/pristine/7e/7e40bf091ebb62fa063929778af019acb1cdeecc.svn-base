@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+
+	<context:property-placeholder location="classpath:uadec.connection.properties" />
+
+	<context:load-time-weaver />
+	<context:component-scan base-package="com.uadec.**.service" />
+	<context:component-scan base-package="com.uadec.**.dao" />
+	<context:component-scan base-package="com.uadec.**.model" />
+	<context:component-scan base-package="com.uadec.**.validator" />
+	
+	<bean id="uadecDS" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="url" value="${db.url}" />
+		<property name="driverClassName" value="${db.driverclassname}" />
+		<property name="username" value="${db.user}" />
+		<property name="password" value="${db.password}" />
+		<property name="removeAbandoned" value="true" />
+		<property name="initialSize" value="20" />
+		<property name="maxActive" value="30" />
+	</bean>
+
+	<bean id="sessionFactoryUadec"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="uadecDS" />
+		<property name="packagesToScan" value="com.uadec.entity.model" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">${db.hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.dialect">${db.hibernate.dialect}</prop>
+				<prop key="hibernate.format_sql">${db.hibernate.format_sql}</prop>
+				<prop key="hibernate.show_sql">${db.hibernate.show_sql}</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+<!-- 		<property name="hibernateManagedSession" value="false" /> -->
+		<property name="sessionFactory" ref="sessionFactoryUadec" />
+	</bean>
+
+	<!-- <bean id="persistenceExceptionTranslationPostProcessor" -->
+	<!-- class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" 
+		/> -->
+
+	<!-- <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="uadecDS" /> </bean> -->
+
+	<tx:annotation-driven transaction-manager="txManager" />
+</beans>
